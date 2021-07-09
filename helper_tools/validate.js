@@ -1,5 +1,6 @@
 const Joi = require('@hapi/joi')
 const User = require('../model/User')
+const bcrypt = require('bcryptjs')
 
 // validating user data on registering 
 const userValidationSchema = Joi.object({
@@ -19,15 +20,44 @@ const userValidationSchema = Joi.object({
         .max(1024)
 })
 
-const newUserValidation = async (params) => {
-    const emailexist = await User.findOne({email : params.email})
+
+// method used to check general common data of a user 
+const userDataValidation = async (params) => {
+    const user_with_this_email = await User.findOne({email : params.email})
+
     let { error } = userValidationSchema.validate(params)
-    let res_error = (error) ? error.details[0].message  : ""
-  
-    if(emailexist) { 
-        res_error += "\nthis email already exists"
-    }    
-    return res_error
+    let err_obj = { "err_msg" : (error) ? error.details[0].message : null, 
+                    "email_exist" : user_with_this_email ? user_with_this_email : false,
+    }  
+    return err_obj
 }
 
-module.exports = { newUserValidation }
+const loggingUserDataValidation = async (params) => {
+    const err_obj = await userDataValidation(params)
+    let res_error_msg = null
+    // if user email is invalid
+    if(!err_obj.email_exist) {
+        res_error_msg = "email or password incorrect :|"
+    } else {
+        const valid_pass = await bcrypt.compare(params.password, err_obj.email_exist.password)
+        if(!valid_pass) {
+            res_error_msg = "password or email incorrect :|"
+        }
+    }
+    
+    return res_error_msg
+}
+
+const newUserValidation = async (params) => {
+    const err_obj = await userDataValidation(params)
+    let res_error_msg = null
+    if(err_obj.err_msg) {
+        res_error_msg = err_obj.err_msg
+    } else if(err_obj.email_exist) {
+        res_error_msg = "this email already exists :|"
+    } 
+    return res_error_msg
+}
+
+
+module.exports = { newUserValidation, loggingUserDataValidation }

@@ -4,7 +4,7 @@ const dotenv = require('dotenv')
 
 const mongoose = require('mongoose')
 
-
+const my_jwt = require('./helper_tools/jwt')
 //set up configs
 dotenv.config()
 
@@ -13,7 +13,9 @@ const authRoute = require('./routes/auth.route')
 // middlewares
 app.use(express.json())
 app.use('/api/user', authRoute)
-
+app.get('/secret/hello', my_jwt.verifyToken, (req, res) => {
+    res.send("Sssh..., secret.... (password)")
+})
 
 mongoose.connect(process.env.DB_CONNECTION, {useUnifiedTopology : true, useNewUrlParser : true})
     .then((res) => {
