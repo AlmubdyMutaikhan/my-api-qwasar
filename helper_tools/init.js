@@ -1,5 +1,7 @@
 const User = require('../model/User')
 const password = require('../helper_tools/password')
+const session = require('express-session')
+const MongoDBStore = require("connect-mongodb-session")(session)
 
 const userInitialization = async (obj) => { 
     const hashed_password = await password.hashPassword(obj.password)       
@@ -12,4 +14,24 @@ const userInitialization = async (obj) => {
     return user
 }
 
-module.exports = { userInitialization }
+const initSessionParams = () => {
+    
+    // init DB session store object
+    const store = new MongoDBStore({
+            uri: process.env.DB_CONNECTION,
+            collection: "sessions",
+    });
+
+    // catch errors while creating that object
+    store.on('error', (err)=>{console.log(err)})
+
+    const obj = {
+        secret : process.env.SESSION_SECRET_SIGN_KEY,
+        resave : false,
+        saveUninitialized : true,
+        store : store
+    }
+    return obj
+}
+
+module.exports = { userInitialization, initSessionParams }

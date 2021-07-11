@@ -28,7 +28,7 @@ authRoute.post('/login', async (req, res) => {
         req.session.auth = true
         req.session.user_id = user._id
         console.log("session stored succesfully")
-       
+        res.send({"msg" : "succesful sign in"})
     }
 })
 

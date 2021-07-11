@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const session = require('express-session')
+const MongoDBStore = require("connect-mongodb-session")(session)
 
 // Method which connects to the DataBase of a server 
 const connectToTheDB = async () => {
