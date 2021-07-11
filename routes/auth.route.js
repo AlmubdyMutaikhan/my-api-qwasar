@@ -24,12 +24,11 @@ authRoute.post('/login', async (req, res) => {
     if(error) {
         res.status(400).send({"err_msg" : error})
     } else {
-        console.log("cookies are " + req.cookies)
         const user = await User.findOne({email : req.body.email})
-        const token = my_jwt.createToken(user._id)
-        res.cookie('jwt_token', token, {expires : new Date(new Date().getTime() + 30 * 1000), httpOnly : true})
-        console.log("cookies are created succesfully")
-        res.header('auth-token', token).send(token)
+        req.session.auth = true
+        req.session.user_id = user._id
+        console.log("session stored succesfully")
+       
     }
 })
 

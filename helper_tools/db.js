@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const mongoDBSessionStore = require('connect-mongodb-session')(session)
+const session = require('express-session')
 
 // Method which connects to the DataBase of a server 
 const connectToTheDB = async () => {
@@ -14,20 +14,10 @@ const connectToTheDB = async () => {
 }
 
 
-// mongoDB class object to store the sessions
-const store = new mongoDBSessionStore({
-    uri : process.env.DB_CONNECTION,
-    collection : "sessions"
-})
 
-store.on('error', (err) => {
-    console.log("error occured while initializing mongodb session store object")
-    console.log(err)
-})
 
 module.exports = {
     connectToTheDB,
-    store
 }
 
 
