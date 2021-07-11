@@ -1,29 +1,36 @@
 const express = require('express')
 const app = express()
 const dotenv = require('dotenv')
-
+const cookieParser = require('cookie-parser')
+const session = require('express-session')
 const mongoose = require('mongoose')
+const DB = require('./helper_tools/db')
 
-const my_jwt = require('./helper_tools/jwt')
 //set up configs
 dotenv.config()
 
 // import Routes
 const authRoute = require('./routes/auth.route')
-// middlewares
-app.use(express.json())
-app.use('/api/user', authRoute)
-app.get('/secret/hello', my_jwt.verifyToken, (req, res) => {
-    res.send("Sssh..., secret.... (password)")
-})
 
-mongoose.connect(process.env.DB_CONNECTION, {useUnifiedTopology : true, useNewUrlParser : true})
-    .then((res) => {
-        console.log("successful connection to DB")
+// set up middlewares
+app.use(cookieParser());
+app.use(express.json())
+app.use(session({
+    secret : process.env.SESSION_SECRET_SIGN_KEY,
+    resave : false,
+    saveUninitialized : true,
+    store : DB.store
+}))
+
+// auth route
+app.use('/api/user', authRoute)
+
+// connection to the DB
+DB.connectToTheDB()
+    .then(ok => {
+        app.listen(3000, () => {console.log("server is on (port:3000)")})
     })
     .catch(err => {
         console.log(err)
     })
-
-app.listen(3000, () => {console.log("server is on (port:3000)")})
 
