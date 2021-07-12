@@ -47,11 +47,15 @@ jobRoute.put('/my-jobs/edit/:job_id', middlewares.authSession, async(req, res) =
             // TODO : validate update params stronger (e.g check salary type)
             let error = validator.jobDocumentValidation(req.body)
             if(error) {
-                return res.send({"err_msg" : error})
+                return res.send({"err_msg" : error.details[0].message})
             }
 
-            const job = await Job.findByIdAndUpdate(req.params.job_id,req.body, {new : true})
-            res.send({"updated_job_doc" : job})      
+            try {
+                const job = await Job.findByIdAndUpdate(req.params.job_id,req.body, {new : true})
+                res.send({"updated_job_doc" : job})
+            }  catch(err) {
+                res.send({"err_msg" : err})
+            }
 })
 
 jobRoute.get('/my-jobs/all', middlewares.authSession, async(req, res) => {
@@ -59,7 +63,7 @@ jobRoute.get('/my-jobs/all', middlewares.authSession, async(req, res) => {
                         .populate('jobsPosted')
                         .exec((err, job_docs) => {
                                 if(err) {
-                                    res.send({"err_msg" : err})
+                                    res.send({"err_msg" : err.details[0].message})
                                 } else {
                                     console.log(job_docs)
                                     res.send({"jobs" : job_docs['jobsPosted']})
@@ -67,6 +71,15 @@ jobRoute.get('/my-jobs/all', middlewares.authSession, async(req, res) => {
                         })
 })
 
+
+jobRoute.delete('/my-jobs/delete/:job_id' , middlewares.authSession, async (req, res) => {
+    try {
+        const deleting_job = await Job.findByIdAndDelete(req.params.job_id)
+        res.send({"deleted_job_data" : deleting_job})
+    } catch(err) {
+        res.send({"err_msg" : err})
+    }
+})
 
 
 
