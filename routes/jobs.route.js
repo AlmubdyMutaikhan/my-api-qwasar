@@ -6,7 +6,7 @@ const Job = require('../model/Job.model')
 const User = require('../model/User.model')
 const validator = require('../helper_tools/validate')
 
-jobRoute.get('/', middlewares.authSession, async (req, res) => {
+jobRoute.get('/', async (req, res) => {
     let randomSkip = Math.ceil(Math.random() * 1000) - 20
     console.log(randomSkip)
     try {
@@ -70,7 +70,6 @@ jobRoute.get('/my-jobs/all', middlewares.authSession, async(req, res) => {
                                 }
                         })
 })
-
 
 jobRoute.delete('/my-jobs/delete/:job_id' , middlewares.authSession, async (req, res) => {
     try {
