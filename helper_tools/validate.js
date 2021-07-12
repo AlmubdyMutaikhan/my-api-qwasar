@@ -23,6 +23,25 @@ const userValidationSchema = Joi.object({
         .alphanum()
 })
 
+const jobValidationSchema = Joi.object({
+    job_title : Joi
+        .string()
+        .min(2)
+        .max(30),
+    skills : Joi
+        .string()
+        .min(2)
+        .max(1000),
+    salary : Joi
+        .string()
+        .min(1)
+        .max(11),
+    location : Joi
+        .string()
+        .min(1)
+        .max(20)
+})
+
 
 // method used to check general common data of a user 
 const userDataValidation = async (params) => {
@@ -65,5 +84,16 @@ const newUserValidation = async (params) => {
     return res_error_msg
 }
 
+const jobDocumentValidation = (params) => {
+    let { error } = jobValidationSchema.validate(params)
+    return error
+}
 
-module.exports = { newUserValidation, loggingUserDataValidation }
+const getParams = (params) => {
+    const obj = {
+        
+    }
+    return obj
+}
+
+module.exports = { newUserValidation, loggingUserDataValidation, jobDocumentValidation }

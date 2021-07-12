@@ -3,9 +3,6 @@ const Schema = mongoose.Schema
 
 
 const jobSchema = new Schema({
-    id : {
-        type : Number,
-    },
     job_title : {
         type : String
     },

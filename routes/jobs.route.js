@@ -4,6 +4,7 @@ const jobRoute = Router()
 const middlewares = require('../middleware/auth.middle')
 const Job = require('../model/Job.model')
 const User = require('../model/User.model')
+const validator = require('../helper_tools/validate')
 
 jobRoute.get('/', middlewares.authSession, async (req, res) => {
     let randomSkip = Math.ceil(Math.random() * 1000) - 20
@@ -42,17 +43,28 @@ jobRoute.post('/new/job', middlewares.authSession, async (req,res) => {
     
 })
 
-jobRoute.get('/my-jobs', middlewares.authSession, async(req, res) => {
-    const usr_employer = User.findById(req.session.user_id)
-                                .populate('jobsPosted')
-                                .exec((err, job_docs) => {
-                                    if(err) {
-                                        res.send({"err_msg" : err})
-                                    } else {
-                                        console.log(job_docs)
-                                        res.send({"jobs" : job_docs['jobsPosted']})
-                                    }
-                                })
+jobRoute.put('/my-jobs/edit/:job_id', middlewares.authSession, async(req, res) => {
+            // TODO : validate update params stronger (e.g check salary type)
+            let error = validator.jobDocumentValidation(req.body)
+            if(error) {
+                return res.send({"err_msg" : error})
+            }
+
+            const job = await Job.findByIdAndUpdate(req.params.job_id,req.body, {new : true})
+            res.send({"updated_job_doc" : job})      
+})
+
+jobRoute.get('/my-jobs/all', middlewares.authSession, async(req, res) => {
+        User.findById(req.session.user_id)
+                        .populate('jobsPosted')
+                        .exec((err, job_docs) => {
+                                if(err) {
+                                    res.send({"err_msg" : err})
+                                } else {
+                                    console.log(job_docs)
+                                    res.send({"jobs" : job_docs['jobsPosted']})
+                                }
+                        })
 })
 
 

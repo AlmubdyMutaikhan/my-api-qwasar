@@ -5,7 +5,12 @@ const MongoDBStore = require("connect-mongodb-session")(session)
 // Method which connects to the DataBase of a server 
 const connectToTheDB = async () => {
     try {
-          const conn = await mongoose.connect( process.env.DB_CONNECTION, { useUnifiedTopology : true, useNewUrlParser : true})
+          const conn = await mongoose.connect( process.env.DB_CONNECTION, {
+              useUnifiedTopology : true,
+              useNewUrlParser : true,
+              useCreateIndex : true,
+              useFindAndModify : true})
+              
           console.log("succesfully connected to the DB")
           return true 
     } catch(err) {
