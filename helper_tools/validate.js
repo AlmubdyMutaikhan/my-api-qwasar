@@ -1,5 +1,5 @@
 const Joi = require('@hapi/joi')
-const User = require('../model/User')
+const User = require('../model/User.model')
 const bcrypt = require('bcryptjs')
 
 // validating user data on registering 
@@ -17,7 +17,10 @@ const userValidationSchema = Joi.object({
     password : Joi
         .string()
         .min(7)
-        .max(1024)
+        .max(1024),
+    status : Joi
+        .string()
+        .alphanum()
 })
 
 
@@ -28,6 +31,7 @@ const userDataValidation = async (params) => {
     let { error } = userValidationSchema.validate(params)
     let err_obj = { "err_msg" : (error) ? error.details[0].message : null, 
                     "email_exist" : user_with_this_email ? user_with_this_email : false,
+                    "status_ok" : params.status === "employee" || params.status === "employer" 
     }  
     return err_obj
 }
@@ -55,6 +59,8 @@ const newUserValidation = async (params) => {
         res_error_msg = err_obj.err_msg
     } else if(err_obj.email_exist) {
         res_error_msg = "this email already exists :|"
+    } else if(!err_obj.status_ok) {
+        res_error_msg = "status should be employee or employer :|"
     } 
     return res_error_msg
 }

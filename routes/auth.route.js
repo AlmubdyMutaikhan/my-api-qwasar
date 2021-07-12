@@ -1,7 +1,7 @@
 const express = require('express')
 const authRoute = express.Router()
 // link dependencies
-const User = require('../model/User')
+const User = require('../model/User.model')
 const validator = require('../helper_tools/validate')
 const init = require('../helper_tools/init')  
 

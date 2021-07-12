@@ -22,7 +22,15 @@ const userSchema = new Schema({
     date : {
         type : Date,
         default : Date.now
-    }
+    },
+    status : {
+        type : String,
+        required : true
+    },
+    jobsPosted : [{
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'Job' 
+    }]
 })
 
 

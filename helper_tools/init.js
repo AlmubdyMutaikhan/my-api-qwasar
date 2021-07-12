@@ -1,4 +1,4 @@
-const User = require('../model/User')
+const User = require('../model/User.model')
 const password = require('../helper_tools/password')
 const session = require('express-session')
 const MongoDBStore = require("connect-mongodb-session")(session)
@@ -8,7 +8,8 @@ const userInitialization = async (obj) => {
     const user = new User({
         name : obj.name,
         email : obj.email,
-        password : hashed_password
+        password : hashed_password,
+        status : obj.status
     })
     
     return user

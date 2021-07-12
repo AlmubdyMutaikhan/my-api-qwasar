@@ -12,6 +12,7 @@ const init = require('./helper_tools/init')
 dotenv.config()
 // import Routes
 const authRoute = require('./routes/auth.route')
+const jobRoute = require('./routes/jobs.route')
 
 // set up middlewares
 app.use(cookieParser());
@@ -20,7 +21,7 @@ app.use(session(init.initSessionParams()))
 
 // auth route
 app.use('/api/user', authRoute)
-
+app.use('/api/jobs', jobRoute)
 // connection to the DB
 DB.connectToTheDB()
     .then(ok => {
