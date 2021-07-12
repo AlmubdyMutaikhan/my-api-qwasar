@@ -24,8 +24,7 @@ const jobSchema = new Schema({
         default : Date.now
     },
     posted_by : {
-        type : Schema.Types.ObjectId,
-        ref : 'User'
+        type : String
     }
 
 })

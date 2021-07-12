@@ -3,8 +3,6 @@ const app = express()
 const dotenv = require('dotenv')
 const cookieParser = require('cookie-parser')
 const session = require('express-session')
-const MongoDBStore = require("connect-mongodb-session")(session)
-const mongoose = require('mongoose')
 const DB = require('./helper_tools/db')
 const init = require('./helper_tools/init')
 

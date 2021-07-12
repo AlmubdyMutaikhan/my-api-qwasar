@@ -21,6 +21,9 @@ const initSessionParams = () => {
     const store = new MongoDBStore({
             uri: process.env.DB_CONNECTION,
             collection: "sessions",
+            cookie: {
+                maxAge: 1000 * 15 // 1 week
+            },
     });
 
     // catch errors while creating that object
