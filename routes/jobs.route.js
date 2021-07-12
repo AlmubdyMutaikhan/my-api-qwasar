@@ -26,7 +26,7 @@ jobRoute.post('/new/job', middlewares.authSession, async (req,res) => {
 
     // update user's job list and save it
     user.save()
-        .then(usr_doc => {
+        .then(() => {
             // then save job
             job.save()
                 .then(job_doc => {
