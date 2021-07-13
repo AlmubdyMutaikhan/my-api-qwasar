@@ -32,4 +32,10 @@ authRoute.post('/login', async (req, res) => {
     }
 })
 
+authRoute.post('/logout', async (req, res) => {
+    req.session.destroy()
+    res.send({"msg" : "sucessful sign out"})
+})
+
+
 module.exports = authRoute
