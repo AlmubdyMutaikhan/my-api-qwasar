@@ -18,7 +18,7 @@ jobRoute.get('/', async (req, res) => {
 })
 
 
-jobRoute.post('/new/job', middlewares.userStatus, async (req,res) => {
+jobRoute.post('/new/job', async (req,res) => {
     
     req.body.posted_by = req.session.user_id
     const job = new Job(req.body)
@@ -44,7 +44,7 @@ jobRoute.post('/new/job', middlewares.userStatus, async (req,res) => {
     
 })
 
-jobRoute.put('/my-jobs/edit/:job_id', middlewares.userStatus, async(req, res) => {
+jobRoute.put('/my-jobs/edit/:job_id', async(req, res) => {
             // TODO : validate update params stronger (e.g check salary type)
             let error = validator.jobDocumentValidation(req.body)
             if(error) {
@@ -59,7 +59,7 @@ jobRoute.put('/my-jobs/edit/:job_id', middlewares.userStatus, async(req, res) =>
             }
 })
 
-jobRoute.get('/my-jobs/all', middlewares.userStatus, async(req, res) => {
+jobRoute.get('/my-jobs/all', async(req, res) => {
         User.findById(req.session.user_id)
                         .populate('jobsPosted')
                         .exec((err, job_docs) => {
@@ -72,7 +72,7 @@ jobRoute.get('/my-jobs/all', middlewares.userStatus, async(req, res) => {
                         })
 })
 
-jobRoute.delete('/my-jobs/delete/:job_id' , middlewares.userStatus, async (req, res) => {
+jobRoute.delete('/my-jobs/delete/:job_id',  async (req, res) => {
     try {
         const deleting_job = await Job.findByIdAndDelete(req.params.job_id)
         res.send({"deleted_job_data" : deleting_job})

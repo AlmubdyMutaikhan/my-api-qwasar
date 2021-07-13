@@ -19,7 +19,7 @@ app.use(session(init.initSessionParams()))
 
 // auth route
 app.use('/api/user', authRoute)
-app.use('/api/jobs', middleware.authSession, jobRoute)
+app.use('/api/jobs', middleware.authSession, middleware.userStatus, jobRoute)
 // connection to the DB
 DB.connectToTheDB()
     .then(ok => {
