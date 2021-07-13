@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser')
 const session = require('express-session')
 const DB = require('./helper_tools/db')
 const init = require('./helper_tools/init')
-
+const middleware = require('./middleware/auth.middle')
 //set up configs
 dotenv.config()
 // import Routes
@@ -19,7 +19,7 @@ app.use(session(init.initSessionParams()))
 
 // auth route
 app.use('/api/user', authRoute)
-app.use('/api/jobs', jobRoute)
+app.use('/api/jobs', middleware.authSession, jobRoute)
 // connection to the DB
 DB.connectToTheDB()
     .then(ok => {

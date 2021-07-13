@@ -20,7 +20,7 @@ authRoute.post('/register', async (req, res) => {
 
 authRoute.post('/login', async (req, res) => {
     const error = await validator.loggingUserDataValidation(req.body)
-    
+    res.cookie("key", "value")
     if(error) {
         res.status(400).send({"err_msg" : error})
     } else {
@@ -34,6 +34,8 @@ authRoute.post('/login', async (req, res) => {
 
 authRoute.post('/logout', async (req, res) => {
     req.session.destroy()
+    // TODO : method for clearing all cookies
+    res.clearCookie('connect.sid')
     res.send({"msg" : "sucessful sign out"})
 })
 
