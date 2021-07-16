@@ -38,4 +38,15 @@ const initSessionParams = () => {
     return obj
 }
 
-module.exports = { userInitialization, initSessionParams }
+const initGoogleUser = (profile) => {
+    const google_user = {
+          googleId: profile.id,
+          displayName: profile.displayName,
+          firstName: profile.name.givenName,
+          lastName: profile.name.familyName,
+          email : profile.emails[0].value
+    }
+    return google_user
+}
+
+module.exports = { userInitialization, initSessionParams, initGoogleUser }
