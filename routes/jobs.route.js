@@ -7,10 +7,12 @@ const User = require('../model/User.model')
 const validator = require('../helper_tools/validate')
 
 jobRoute.get('/', async (req, res) => {
-    let randomSkip = Math.ceil(Math.random() * 1000) - 20
-    console.log(randomSkip)
+    // page size is constant
+    const PAGE_SIZE = 20  
+    const page = req.query.page ? req.query.page : 1
+    const skip = (page - 1) * PAGE_SIZE
     try {
-        let data = await Job.find({},{},{limit : 20, skip : randomSkip})
+        let data = await Job.find({},{},{limit : PAGE_SIZE, skip : skip})
         res.json(data)
     } catch(err) {
         res.send(err)
