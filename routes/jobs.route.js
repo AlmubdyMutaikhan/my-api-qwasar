@@ -5,7 +5,7 @@ const middlewares = require('../middleware/auth.middle')
 const Job = require('../model/Job.model')
 const User = require('../model/User.model')
 const validator = require('../helper_tools/validate')
-
+const helpers = require('../helper_tools/hf')
 jobRoute.get('/', async (req, res) => {
     // page size is constant
     const PAGE_SIZE = 20  
@@ -18,6 +18,18 @@ jobRoute.get('/', async (req, res) => {
         res.send(err)
     }
 })
+
+jobRoute.get('/specific/', async (req, res) => {
+      // get the filters
+      const filter = helpers.setFilter(req.query) 
+      try {
+        const docs = await Job.find(filter)
+        res.json(docs)
+    } catch(err) {
+        res.send(err)
+      }
+})
+
 
 
 jobRoute.post('/new/job', async (req,res) => {

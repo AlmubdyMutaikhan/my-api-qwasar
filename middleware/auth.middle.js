@@ -21,8 +21,12 @@ const userStatus = async (req, res, next) => {
         const user = await User.findById(req.session.user_id)
         if(user.status === "employer") {
             next()
-        } else {
-            return res.json({"err_msg" : "'employer' status is required"})
+        }  else {
+            if(req.path === '/specific') {
+                next()
+            } else {
+                return res.json({"err_msg" : "'employer' status is required"})
+            }
         }
     } else {
         res.json({"err_msg" : "invalid user id"})
