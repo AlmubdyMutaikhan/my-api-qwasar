@@ -70,7 +70,7 @@ const loggingUserDataValidation = async (params) => {
     
     return res_error_msg
 }
-
+// TODO : try catch (throw errors)
 const newUserValidation = async (params) => {
     const err_obj = await userDataValidation(params)
     let res_error_msg = null
@@ -97,3 +97,5 @@ const getParams = (params) => {
 }
 
 module.exports = { newUserValidation, loggingUserDataValidation, jobDocumentValidation }
+
+// read standard JS style code

@@ -14,7 +14,7 @@ authRoute.post('/register', async (req, res) => {
         const saved_user_data = await new_user.save()
         res.status(201).send({user : saved_user_data._id})
     } catch(err) {
-        res.status(400).send({"err" : err })
+        res.status(400).send({"err_msg" : err })
     }
 })
 

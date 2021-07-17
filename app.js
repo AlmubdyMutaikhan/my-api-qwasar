@@ -44,6 +44,4 @@ DB.connectToTheDB()
 /**
  * what i learnt 
  * set midllewares for all routes
- * 
- * 
  */
