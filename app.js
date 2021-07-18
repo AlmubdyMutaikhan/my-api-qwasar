@@ -7,7 +7,7 @@ const DB = require('./helper_tools/db')
 const init = require('./helper_tools/init')
 const middleware = require('./middleware/auth.middle')
 const passport = require('passport')
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 8080
 //set up configs
 dotenv.config()
 
