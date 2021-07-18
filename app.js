@@ -26,7 +26,10 @@ const authRoute = require('./routes/auth.route')
 const jobRoute = require('./routes/jobs.route')
 const oAuthRote = require('./routes/oAuth.rote')
 
-
+// root 
+app.get('/', (req, res) => {
+    res.json({"success" : "true", "desc" : "restful api with edu purposes", "link to doc" : "hhtps:link" })
+})
 // auth route
 app.use('/api/user', authRoute)
 app.use('/auth/', oAuthRote)
