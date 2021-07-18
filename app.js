@@ -7,7 +7,9 @@ const DB = require('./helper_tools/db')
 const init = require('./helper_tools/init')
 const middleware = require('./middleware/auth.middle')
 const passport = require('passport')
+const swagger = require('swagger-ui-express')
 const PORT = 8084
+const apidoc = require('./api-documentation-swagger')
 //set up configs
 dotenv.config()
 
@@ -20,6 +22,8 @@ app.use(express.json())
 app.use(session(init.initSessionParams()))
 app.use(passport.initialize())
 app.use(passport.session())
+
+app.use('/api-doc',swagger.serve, swagger.setup(apidoc)) // used for swagger api documentation
 
 // import Routes
 const authRoute = require('./routes/auth.route')
