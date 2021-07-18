@@ -10,7 +10,7 @@ oAuth.get('/google/callback', passport.authenticate('google', {failureRedirect :
     (req, res) => {
         console.log(req)
         // res.redirect()
-        res.json({ "msg" : "sucessful authorized", "success" : true})
+        res.json({ "msg" : "sucessful authorized", "success" : true, "user" : req.user})
 })
 
 oAuth.get('/google/logout', (req, res) => {
