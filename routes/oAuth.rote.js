@@ -8,10 +8,9 @@ oAuth.get('/google', passport.authenticate('google', {scope : ["profile", "email
 
 oAuth.get('/google/callback', passport.authenticate('google', {failureRedirect : '/google/failed'}), 
     (req, res) => {
- alert("here is good")
         console.log(req)
         // res.redirect()
-        res.json({ "msg" : "unsucessful authorized", "success" : false})
+        res.json({ "msg" : "sucessful authorized", "success" : true})
 })
 
 oAuth.get('/google/logout', (req, res) => {
@@ -21,7 +20,7 @@ oAuth.get('/google/logout', (req, res) => {
 })
 
 oAuth.get('/google/failed', (req, res) => {
-    res.json({ "msg" : "unsucessful authorized", "success" : false})
+    res.json({ "msg" : "unsucessful authorized (redirected to failed)", "success" : false})
 })
 
 module.exports = oAuth
