@@ -32,7 +32,7 @@ authRoute.post('/login', async (req, res) => {
     }
 })
 
-authRoute.post('/logout', async (req, res) => {
+authRoute.delete('/logout', async (req, res) => {
     req.session.destroy()
     // TODO : method for clearing all cookies
     res.clearCookie('connect.sid')

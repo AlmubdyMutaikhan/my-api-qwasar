@@ -5,11 +5,6 @@ module.exports = {
         User: {
           type: "object", // data type
           properties: {
-            _id: {
-              type: "ObjectId", // data-type
-              description: "User identification number", // desc
-              example: "00e11a40998e581094e43d1a", 
-            },
             name: {
               type: "String", // data-type
               description: "User's name", // desc
@@ -22,23 +17,14 @@ module.exports = {
             },
             password: {
               type: "String (Hashed)", // data type
-              description: "password of a user", // desc
-              example: "password", 
-            },
-            date : {
-              type : "Date",
-              description : "Date of the user's sign up",
-              example : "2021-07-09T18:49:36.192+00:00" 
+              description: "Hashed password of a user", // desc
+              example: "$2a$12$zKgSYggbTzuIxITk935otOFVpKzA4npXhC.49gQlReu44FY00/lZy", 
             },
             status : {
               type : "String",
               description : "status of the user (employee or employer)",
               example : "employer"
             },
-            jobsPosted : {
-              type : "Array",
-              description : "Array storing the jobs that this user posted (Warning : required status 'employer')"
-            }
           },
         },
     

@@ -1,9 +1,9 @@
 module.exports = {
     // operation's method
     post: {
-      tags: ["Todo CRUD operations"], // operation's tag
-      description: "Create todo", // short desc
-      operationId: "createTodo", // unique operation id
+      tags: ["User Auth operations"], // operation's tag
+      description: "Sign in the user", // short desc
+      operationId: "signinUser", // unique operation id
       parameters: [], // expected params
       requestBody: {
         // expected request body
@@ -11,20 +11,17 @@ module.exports = {
           // content-type
           "application/json": {
             schema: {
-              $ref: "#/components/schemas/TodoInput", // todo input data model
+              $ref: "#/components/schemas/User", // todo input data model
             },
           },
         },
+        
       },
       // expected responses
       responses: {
         // response code
         201: {
-          description: "Todo created successfully", // response desc
-        },
-        // response code
-        500: {
-          description: "Server error", // response desc
+          description: "successfull sign in", // response desc
         },
       },
     },
