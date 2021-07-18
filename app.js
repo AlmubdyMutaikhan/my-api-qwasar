@@ -7,7 +7,7 @@ const DB = require('./helper_tools/db')
 const init = require('./helper_tools/init')
 const middleware = require('./middleware/auth.middle')
 const passport = require('passport')
-const PORT = process.env.PORT || 8080
+const PORT = 8080
 //set up configs
 dotenv.config()
 
@@ -30,6 +30,7 @@ const oAuthRote = require('./routes/oAuth.rote')
 app.get('/', (req, res) => {
     res.json({"success" : "true", "desc" : "restful api with edu purposes", "link to doc" : "hhtps:link" })
 })
+
 // auth route
 app.use('/api/user', authRoute)
 app.use('/auth/', oAuthRote)
