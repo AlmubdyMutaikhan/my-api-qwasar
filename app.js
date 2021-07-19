@@ -8,7 +8,7 @@ const init = require('./helper_tools/init')
 const middleware = require('./middleware/auth.middle')
 const passport = require('passport')
 const swagger = require('swagger-ui-express')
-const PORT = 8080
+const PORT = process.env.PORT || 8080
 const apidoc = require('./api-documentation-swagger')
 const cors = require('cors')
 //set up configs
