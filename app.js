@@ -34,7 +34,7 @@ const oAuthRote = require('./routes/oAuth.rote')
 
 // root 
 app.get('/', (req, res) => {
-    res.json({"success" : "true", "desc" : "restful api with edu purposes", "link to doc" : "https:bit.ly/link-to-doc" })
+    res.json({"success" : "true", "desc" : "restful api with edu purposes", "link to doc" : "<current_domain>/api-doc" })
 })
 
 // auth route
