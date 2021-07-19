@@ -1,10 +1,10 @@
 {
-  "name": "auth-api",
-  "version": "1.0.0",
+  "name": "rest-api",
+  "version": "1.0.1",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "node app.js"
   },
   "author": "",
   "license": "ISC",
