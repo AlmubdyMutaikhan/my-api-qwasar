@@ -9,6 +9,7 @@ const delJob = require('../job/del-my-job')
 const updateJob = require('../job/updateJob')
 const postGoogleUser = require('../google-auth/get-google-user')
 const getLogoutUser = require('../google-auth/get-logout')
+const putUserStatus = require('../auth/update-status')
 module.exports = {
     paths:{
         '/api/user/login':{
@@ -43,6 +44,9 @@ module.exports = {
         },
         '/auth/google/logout' : {
             ...getLogoutUser
+        },
+        '/auth/google/user/status' : {
+            ...putUserStatus
         }
     }
 }
