@@ -10,6 +10,7 @@ const passport = require('passport')
 const swagger = require('swagger-ui-express')
 const PORT = 8080
 const apidoc = require('./api-documentation-swagger')
+const cors = require('cors')
 //set up configs
 dotenv.config()
 
@@ -22,7 +23,8 @@ app.use(express.json())
 app.use(session(init.initSessionParams()))
 app.use(passport.initialize())
 app.use(passport.session())
-
+app.use(cors({origin : '*',
+methods : ['GET','PUT','POST','DELETE']})) // allow everyone to use rsrcs
 app.use('/api-doc',swagger.serve, swagger.setup(apidoc)) // used for swagger api documentation
 
 // import Routes
