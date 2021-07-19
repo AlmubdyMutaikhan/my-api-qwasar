@@ -38,9 +38,14 @@ jobRoute.post('/new/job', async (req,res) => {
     
     req.body.posted_by = req.session.user_id
     const job = new Job(req.body)
-    const user = await User.findOne({_id : req.session.user_id})
+    let user = null
+    if(req.session.user_type === "origin") {
+       user = await User.findById(req.session.user_id)
+    } else {
+        user = await googleUser.findOne({googleId : req.session.user_id})
+    }
+
     user.jobsPosted.push(job._id)
-    
 
     // update user's job list and save it
     user.save()
@@ -80,7 +85,7 @@ jobRoute.get('/my-jobs/all', async(req, res) => {
         if(req.session.user_type === "origin") {
             user = User.findById(req.session.user_id)
         } else if(req.session.user_type === "google") {
-            user = googleUser.findOne({googleId : req.session.user_id})
+            user =  googleUser.findOne({googleId : req.session.user_id})
         }
        
         user
