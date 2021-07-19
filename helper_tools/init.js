@@ -40,7 +40,7 @@ const initSessionParams = () => {
 
 const initGoogleUser = (profile) => {
     const google_user = {
-          googleId: profile.id,
+            googleId: profile.id,
           displayName: profile.displayName,
           firstName: profile.name.givenName,
           lastName: profile.name.familyName,

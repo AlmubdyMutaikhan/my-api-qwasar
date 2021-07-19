@@ -27,6 +27,7 @@ authRoute.post('/login', async (req, res) => {
         const user = await User.findOne({email : req.body.email})
         req.session.auth = true
         req.session.user_id = user._id
+        req.session.user_type = "origin"
         console.log("session stored succesfully")
         res.send({"msg" : "succesful sign in"})
     }

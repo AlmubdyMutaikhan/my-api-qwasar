@@ -8,9 +8,9 @@ oAuth.get('/google', passport.authenticate('google', {scope : ["profile", "email
 
 oAuth.get('/google/callback', passport.authenticate('google', {failureRedirect : '/google/failed'}), 
     (req, res) => {
-        console.log(req)
         req.session.user_id = req.user.id
         req.session.auth = true
+        req.session.user_type = "google"
         res.json({ "msg" : "sucessful authorized", "success" : true, "user" : req.user})
 })
 

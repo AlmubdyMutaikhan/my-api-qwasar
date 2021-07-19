@@ -11,7 +11,7 @@ module.exports = (passport) => {
   async function(accessToken, refreshToken, profile, done) {
     console.log(profile)
     const signed_in = await googleService.hasAlreadyRegisteredGoogleUser(profile.id)
-    console.log(signed_in)
+    //console.log(signed_in)
     // if user hasnt been signed up  
      if(!signed_in) {
           // save and register

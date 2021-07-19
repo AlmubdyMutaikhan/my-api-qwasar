@@ -16,6 +16,7 @@ const createAndWriteGoogleUser = async (profile) => {
     try {
         const google_user = await googleUser.create(google_user_obj)
         console.log("succesfully saved the user")
+        console.log(google_user)
         return {"msg" : "ok"}
     } catch(err) {
         console.log(err)
