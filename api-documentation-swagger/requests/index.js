@@ -7,6 +7,8 @@ const getAllMyJobs = require('../job/get-all-my-jobs')
 const getSpecifiJobs = require('../job/get-specific-jobs')
 const delJob = require('../job/del-my-job')
 const updateJob = require('../job/updateJob')
+const postGoogleUser = require('../google-auth/get-google-user')
+const getLogoutUser = require('../google-auth/get-logout')
 module.exports = {
     paths:{
         '/api/user/login':{
@@ -35,6 +37,12 @@ module.exports = {
         },
         '/api/jobs/my-jobs/edit/{job_id}' : {
             ...updateJob
+        },
+        '/auth/google' : {
+            ...postGoogleUser
+        },
+        '/auth/google/logout' : {
+            ...getLogoutUser
         }
     }
 }

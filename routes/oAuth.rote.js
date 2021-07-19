@@ -9,13 +9,15 @@ oAuth.get('/google', passport.authenticate('google', {scope : ["profile", "email
 oAuth.get('/google/callback', passport.authenticate('google', {failureRedirect : '/google/failed'}), 
     (req, res) => {
         console.log(req)
-        // res.redirect()
+        req.session.user_id = req.user.id
+        req.session.auth = true
         res.json({ "msg" : "sucessful authorized", "success" : true, "user" : req.user})
 })
 
-oAuth.get('/google/logout', (req, res) => {
+oAuth.delete('/google/logout', (req, res) => {
     req.logout()
     req.user = null
+    req.session.destroy()
     res.json({"msg" : "succesfully logged out"})
 })
 
