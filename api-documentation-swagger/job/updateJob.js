@@ -18,7 +18,7 @@ module.exports = {
           // content-type
           "application/json": {
             schema: {
-              $ref: "#/components/schemas/Job", // change values
+              $ref: "#/components/schemas/PostingJob", // change values
             },
           },
         },

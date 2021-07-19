@@ -3,7 +3,7 @@ module.exports = {
     post: {
       tags: ["Job CRUD operations"], // operation's tag
       description: "Post a new job (status must be 'employer')", // short desc
-      operationId: "postAjob", // unique operation id
+      operationId: "postAjob", 
       parameters: [], // expected params
       requestBody: {
         // expected request body
@@ -11,7 +11,7 @@ module.exports = {
           // content-type
           "application/json": {
             schema: {
-              $ref: "#/components/schemas/Job", // todo input data model
+              $ref: "#/components/schemas/PostingJob", 
             },
           },
         },

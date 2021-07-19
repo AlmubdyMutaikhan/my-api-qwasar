@@ -41,6 +41,53 @@ module.exports = {
             }
           },
         },
+
+        RegisterUser: {
+          type: "object", // data type
+          properties: {
+            name: {
+              type: "String", // data-type
+              description: "User's name", // desc
+              example: "Zharkyn", 
+            },
+            email: {
+              type: "String", // data type
+              description: "User's email", // desc
+              example: "zharkyn.bol@mail.com", 
+            },
+            password: {
+              type: "String (Hashed)", // data type
+              description: "password of a user", // desc
+              example: "password", 
+            },
+          
+            status : {
+              type : "String",
+              description : "status of the user (employee or employer)",
+              example : "employer"
+            },
+         
+          },
+        },
+
+        
+
+
+        LogInUser: {
+          type: "object", // data type
+          properties: {
+            email: {
+              type: "String", // data type
+              description: "User's email", // desc
+              example: "zharkyn.bol@mail.com", 
+            },
+            password: {
+              type: "String (Hashed)", // data type
+              description: "password of a user", // desc
+              example: "password", 
+            },
+          },
+        },
     
         Job: {
           type: "object", // data type
@@ -77,6 +124,37 @@ module.exports = {
             },
           },
         },
+
+        PostingJob: {
+          type: "object", // data type
+          properties: {
+            
+            job_title: {
+              type: "String", // data type
+              description: "Job's title", // desc
+              example: "Senior Software Engineer", // example of a title
+            },
+            skills: {
+              type: "String", // data type
+              description: "The skills that required for this job", // desc
+              example: "AWS, Node js, Rust", // example of a completed value
+            },
+            salary: {
+              type: "String", // data type
+              description: "Salary of this job described in certain currency", // desc
+              example: "€1500977", // example of a title
+            },
+            location: {
+              type: "String", // data type
+              description: "The location for this job", // desc
+              example: "Palo Alto", // example of a completed value
+            },
+
+          },
+        },
+
+
+
        
         GoogleUser: {
           type: "object", //data type
