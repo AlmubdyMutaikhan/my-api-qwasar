@@ -1,7 +1,8 @@
 const { Router } = require('express')
 const oAuth = Router()
 const passport = require('passport')
- 
+const googleUser = require('../model/googleUser.model')
+
 oAuth.get('/google', passport.authenticate('google', {scope : ["profile", "email"]}))
 
 // <button href="3000/auth/google">
@@ -23,6 +24,21 @@ oAuth.delete('/google/logout', (req, res) => {
 
 oAuth.get('/google/failed', (req, res) => {
     res.json({ "msg" : "unsucessful authorized (redirected to failed)", "success" : false})
+})
+
+oAuth.put('/google/user/status/', async (req, res) => {
+    const status = req.query.status
+    
+    if(!(status == "employer" || status === "employee")) {
+        return res.send({"err" : "status should be employer or employee"})
+    }
+
+    try {
+        const googleUserDoc = await googleUser.findOneAndUpdate({googleId : req.session.user_id},{status : status}, {new : true})
+        res.send({"updated user" : googleUserDoc}) 
+    } catch(err) {
+        res.send(err)
+    }
 })
 
 module.exports = oAuth

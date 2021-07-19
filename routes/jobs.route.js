@@ -6,6 +6,8 @@ const Job = require('../model/Job.model')
 const User = require('../model/User.model')
 const validator = require('../helper_tools/validate')
 const helpers = require('../helper_tools/hf')
+const googleUser = require('../model/googleUser.model')
+
 jobRoute.get('/', async (req, res) => {
     // page size is constant
     const PAGE_SIZE = 20  
@@ -74,16 +76,23 @@ jobRoute.put('/my-jobs/edit/:job_id', async(req, res) => {
 })
 
 jobRoute.get('/my-jobs/all', async(req, res) => {
-        User.findById(req.session.user_id)
-                        .populate('jobsPosted')
-                        .exec((err, job_docs) => {
-                                if(err) {
-                                    res.send({"err_msg" : err.details[0].message})
-                                } else {
-                                    console.log(job_docs)
-                                    res.send({"jobs" : job_docs['jobsPosted']})
-                                }
-                        })
+        let user = null
+        if(req.session.user_type === "origin") {
+            user = User.findById(req.session.user_id)
+        } else if(req.session.user_type === "google") {
+            user = googleUser.findOne({googleId : req.session.user_id})
+        }
+       
+        user
+            .populate('jobsPosted')
+            .exec((err, job_docs) => {
+                        if(err) {
+                            res.send({"err_msg" : err.details[0].message})
+                        } else {
+                            console.log(job_docs)
+                            res.send({"jobs" : job_docs['jobsPosted']})
+                        }
+                })
 })
 
 jobRoute.delete('/my-jobs/delete/:job_id',  async (req, res) => {

@@ -20,7 +20,14 @@ const googleUserSchema = new Schema({
     email : {
         type : String,
         required : true
-    }
+    },
+    status : {
+        type : String
+    },
+    jobsPosted : [{
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'Job' 
+    }]
 })
 
 
