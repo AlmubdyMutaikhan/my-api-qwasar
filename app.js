@@ -12,11 +12,17 @@ const normalizePort = require('normalize-port')
 const PORT = normalizePort(process.env.PORT || '80')
 const apidoc = require('./api-documentation-swagger')
 const cors = require('cors')
+const redis = require('redis')
+
 //set up configs
 dotenv.config()
 
-
-
+// set up redis for work
+const redisPort = 6379
+const redisHost = '127.0.0.1'
+const client = redis.createClient(redisPort, redisHost)
+client.on('error', (err)=>{console.log(err)})
+client.on('connect', () => {console.log("connected")})
 // set up passport oAuth
 require('./config/passport-setup')(passport)
 
@@ -29,6 +35,8 @@ app.use(passport.session())
 app.use(cors({origin : '*',
 methods : ['GET','PUT','POST','DELETE']})) // allow everyone to use rsrcs
 app.use('/api-doc',swagger.serve, swagger.setup(apidoc)) // used for swagger api documentation
+
+
 
 // import Routes
 const authRoute = require('./routes/auth.route')
