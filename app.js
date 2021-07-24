@@ -11,16 +11,20 @@ const swagger = require('swagger-ui-express')
 const normalizePort = require('normalize-port')
 const PORT = normalizePort(process.env.PORT || '80')
 const apidoc = require('./api-documentation-swagger')
+const redisConnect = require('connect-redis')
 const cors = require('cors')
 const redis = require('redis')
 
 //set up configs
 dotenv.config()
 
+
 // set up redis for work
+const redisStore = redisConnect(session)
 const redisPort = 6379
 const redisHost = '127.0.0.1'
 const client = redis.createClient(redisPort, redisHost)
+
 client.on('error', (err)=>{console.log(err)})
 client.on('connect', () => {console.log("connected")})
 // set up passport oAuth
@@ -29,7 +33,18 @@ require('./config/passport-setup')(passport)
 // set up middlewares
 app.use(cookieParser());
 app.use(express.json())
-app.use(session(init.initSessionParams()))
+app.use(session({
+    store : new redisStore({client : client}),
+    secret : process.env.SESSION_SECRET_SIGN_KEY,
+    saveUninitialized : false,
+    cookie : {
+        secure : false,
+        httpOnly : true,
+        resave : false,
+        maxAge : 1000*60 * 30
+    }
+}))
+
 app.use(passport.initialize())
 app.use(passport.session())
 app.use(cors({origin : '*',

@@ -13,6 +13,7 @@
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "connect-mongodb-session": "^2.4.1",
+    "connect-redis": "^6.0.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "csvtojson": "^2.0.10",
@@ -26,6 +27,7 @@
     "passport": "^0.4.1",
     "passport-google-oauth20": "^2.0.0",
     "redis": "^3.1.2",
+    "redis-connect": "^0.2.0",
     "swagger-ui-express": "^4.1.6"
   }
 }
