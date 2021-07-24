@@ -8,11 +8,14 @@ const init = require('./helper_tools/init')
 const middleware = require('./middleware/auth.middle')
 const passport = require('passport')
 const swagger = require('swagger-ui-express')
-const PORT = process.env.PORT || 8080
+const normalizePort = require('normalize-port')
+const PORT = normalizePort(process.env.PORT || '80')
 const apidoc = require('./api-documentation-swagger')
 const cors = require('cors')
 //set up configs
 dotenv.config()
+
+
 
 // set up passport oAuth
 require('./config/passport-setup')(passport)
